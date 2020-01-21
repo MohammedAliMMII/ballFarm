@@ -41,7 +41,6 @@ class _DevelopPageState extends State<DevelopPage> {
     }
     setState(() {
       shape = _shape;
-      print("shape ${shape.shCode}");
       generator();
     });
   }
@@ -114,7 +113,6 @@ class _DevelopPageState extends State<DevelopPage> {
         (e){
          for(final f in courentPoinets){
            if(listEquals(e, f)){
-             print("tt worlk");
              return true;
            }else{
              return false;
@@ -143,7 +141,6 @@ class _DevelopPageState extends State<DevelopPage> {
         int _uperTn = pointsAvailble[rand][0];
         uperTow = getLetter(_uperTn);
         int _smallTn = pointsAvailble[rand][1];
-        print("_smallTn $_smallTn");
         smallTow = getLetter(_smallTn).toLowerCase();
       }
       randomT();
@@ -193,42 +190,63 @@ class _DevelopPageState extends State<DevelopPage> {
         backgroundColor: Color(0xff121a25),
         body: Container(
           alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              size.width >= 360 ?Container(
-                  child: Row(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+
+                  margin: EdgeInsets.only(bottom: 20),
+                  child: Text(
+                    "Choose the fittest to survival",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                )
+                ,
+                size.width >= 360 ?Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        shapeWidget(0),
+                        shapeWidget(1)
+                      ],
+                    )
+                ) :
+                Container(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       shapeWidget(0),
                       shapeWidget(1)
                     ],
-                  )
-              ) :
-              Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    shapeWidget(0),
-                    shapeWidget(1)
-                  ],
-                ),
-              )
-              ,
-              Container(
-                margin: EdgeInsets.only(top: 20),
-                child: Text(
-                  "Choose the fittest to stay",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 28
                   ),
-                  textAlign: TextAlign.center,
-                ),
+                )
+              ],
+            ),
+          ),
+        ),
+      bottomNavigationBar: BottomAppBar(
+        color: Color(0xff121a25),
+        child: Container(
+          height: 30,
+          alignment: Alignment.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image(image: AssetImage("images/twitter.png"),width: 22,height: 22,),
+              Padding(padding: EdgeInsets.only(right: 4),),
+              Text("@MohammedMMII",
+              style: TextStyle(color: Colors.white,fontSize: 16),
+
               )
             ],
           ),
-        )
+        ),
+      ),
     );
   }
   Widget shapeWidget(index){
@@ -237,19 +255,15 @@ class _DevelopPageState extends State<DevelopPage> {
         if(index == 0){
           Shape _upShape = shape;
           _upShape.shCode = shape.shCode + (shapesToChose[index][shapesToChose[index].length - 2] ) + (shapesToChose[index][shapesToChose[index].length - 1] );
-          print("up ${_upShape.shCode}");
           int  n = await db.updateShape(_upShape);
           changeHapedned = true;
-          print("nn $n");
           Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => DevelopPage(id)));
         }
         else if(index == 1){
           Shape _upShape = shape;
           _upShape.shCode = shape.shCode + (shapesToChose[index][shapesToChose[index].length - 2] ) + (shapesToChose[index][shapesToChose[index].length - 1] );
-          print("up ${_upShape.shCode}");
           int n = await db.updateShape(_upShape);
           changeHapedned = true;
-          print("n $n");
           Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => DevelopPage(id)));
         }
       },

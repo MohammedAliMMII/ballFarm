@@ -19,14 +19,14 @@ class _TeachPageState extends State<TeachPage> {
     TextStyle detStyle = TextStyle(color: Color(0xffD6D6D6),fontSize: 22);
     return Scaffold(
       backgroundColor: Color(0xff121A25),
-      body: Container(
+      body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             SafeArea(
               child: Container(
-                width: 280,
-                height: 280,
-                margin: EdgeInsets.only(bottom: 10),
+                width: 240,
+                height: 240,
+                margin: EdgeInsets.only(bottom: 5),
                 child: page == 1 ? Image(image: AssetImage("images/earth.png"),) :
                 page == 2 ? Image(image: AssetImage("images/single.png"),) :
                 page == 3 ? Image(image: AssetImage("images/dna.png"),)
@@ -42,66 +42,66 @@ class _TeachPageState extends State<TeachPage> {
                         page == 1 ? Text("Formation of the planet Earth",style: tittleStyle,)
                         : page ==2 ? Text("First life",style: tittleStyle,)
                         :page == 3 ? Text("Genetics",style: tittleStyle,)
-                        : Text("Now after 2600 years",style: tittleStyle,),
+                        : Text("Now after 2600 million years",style: tittleStyle,),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 40,left: 2,right: 2),
                     child:
-                    page == 1 ? Text("Before 4600 million years ago the earth was formed in the solar system , and there our stroy is begining",style: detStyle,textAlign: TextAlign.center,)
-                        : page ==2 ? Text("Before 4000 million years ago The first simple form of life appeared because the conditions and climate of the earth were appropriate for its appearance",style: detStyle,textAlign: TextAlign.center)
-                        :page == 3 ? Text("It is possible that an error occurs in the transfer of a small part of the gene, and this error can be beneficial or harmful to the organism, and thus comes the role of naturalists to choose the most suitable organism to survive.",style: detStyle,textAlign: TextAlign.center)
-                        : Text("We will simulate the evolution of animals and your brain will play the role of nature to obtain the most suitable form of survival",style: detStyle,textAlign: TextAlign.center),
+                    page == 1 ? Text("before 4600 million years ago the earth was formed in the solar system , and their our story is beginning",style: detStyle,textAlign: TextAlign.center,)
+                        : page ==2 ? Text("before 4000 million years ago The first simple form of life appeared because the conditions and climate of the earth were appropriate for its appearance",style: detStyle,textAlign: TextAlign.center)
+                        :page == 3 ? Text("it is possible that an error occurs in the transfer of a small part of the gene, and this error can be beneficial or harmful to the organism, and thus comes the role of nature to choose the most suitable organism to survive.",style: detStyle,textAlign: TextAlign.center)
+                        : Text("صe will simulate the evolution of animals and your brain will play the role of nature to obtain the most suitable form of survival",style: detStyle,textAlign: TextAlign.center),
                   ),
                 ],
               ),
             ),
-            Expanded(
-              child: Container(),
-            ),
-            Container(
-              alignment: Alignment.bottomCenter,
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.navigate_before,color: page > 1 ? Colors.white : Colors.white30,size: 30,),
-                    onPressed: (){
-                      if(page > 1){
-                        setState(() {
-                          page = page - 1;
-                        });
-                      }
-                    },
-                  ),
-                  Expanded(
-                    child: Container(),
-                  ),
-                  page == 1 ? ball(1,white: true) : ball(1),
-                  page == 2 ? ball(2,white: true) : ball(2),
-                  page == 3 ? ball(3,white: true) : ball(3),
-                  page == 4 ? ball(4,white: true) : ball(4),
-                  Expanded(
-                    child: Container(),
-                  ),
-                  IconButton(
-                    onPressed: (){
-                      if(page < 4){
-                        setState(() {
-                          page = page + 1;
-                        });
-                      }else{
-                        User _user = User("y");
-                        print(   db.saveUser(_user));
-                        Navigator.push(context, CupertinoPageRoute(builder: (context)=>MainPage()));
-                      }
-                    },
-                    icon: Icon(page < 4 ? Icons.navigate_next:Icons.done,color: Colors.white,size: 30,),
-                  )
-                ],
-              ),
-            )
           ],
         ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+          color: Color(0xff121A25),
+          child:   Container(
+          height: 50,
+          margin: EdgeInsets.only(bottom: 10),
+          child: Row(
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.navigate_before,color: page > 1 ? Colors.white : Colors.white30,size: 30,),
+                onPressed: (){
+                  if(page > 1){
+                    setState(() {
+                      page = page - 1;
+                    });
+                  }
+                },
+              ),
+              Expanded(
+                child: Container(),
+              ),
+              page == 1 ? ball(1,white: true) : ball(1),
+              page == 2 ? ball(2,white: true) : ball(2),
+              page == 3 ? ball(3,white: true) : ball(3),
+              page == 4 ? ball(4,white: true) : ball(4),
+              Expanded(
+                child: Container(),
+              ),
+              IconButton(
+                onPressed: (){
+                  if(page < 4){
+                    setState(() {
+                      page = page + 1;
+                    });
+                  }else{
+                    User _user = User("y");
+                    Navigator.push(context, CupertinoPageRoute(builder: (context)=>MainPage()));
+                  }
+                },
+                icon: Icon(page < 4 ? Icons.navigate_next:Icons.done,color: Colors.white,size: 30,),
+              )
+            ],
+          ),
+        )
+
       ),
     );
   }
@@ -109,7 +109,6 @@ class _TeachPageState extends State<TeachPage> {
     if(white != null&& white == true){
       return GestureDetector(
         onTap:(){
-          print("page $page");
           setState(() {
             page = pageIn;
           });

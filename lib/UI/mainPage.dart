@@ -18,18 +18,14 @@ class _MainPageState extends State<MainPage> {
   bool get = false;
   void getShapesView() async{
     List shapes = await db.getAllShape();
-    print("$shapes");
     for(final e in shapes){
-      print(shapes);
       setState(() {
         shapesList.add(Shape.fromMap(e));
       });
     }
-    print("workd aftre");
     setState(() {
       get = true;
     });
-    print("ggg $get");
   }
 
   @override
@@ -88,9 +84,9 @@ class _MainPageState extends State<MainPage> {
   }
   @override
   Widget build(BuildContext context) {
-    print("get $get");
     if(changeHapedned != null){
       if( changeHapedned == true){
+        shapesList = [];
         getShapesView();
         changeHapedned = false;
       }
@@ -169,7 +165,7 @@ class _MainPageState extends State<MainPage> {
               Container(
                 margin: EdgeInsets.only(top: 40,bottom:10,left: 2,right: 2),
                 child: Text(
-                  "To delete Organism or show detiles jsut have long press on Organism shape" ,style: TextStyle(color: Color(0xff888c92),fontSize: 28),textAlign: TextAlign.center,
+                  "To delete Organism or show details jsut have long press on Organism shape" ,style: TextStyle(color: Color(0xff888c92),fontSize: 28),textAlign: TextAlign.center,
                 ),
               ),
               Row(
@@ -269,12 +265,8 @@ class _MainPageState extends State<MainPage> {
   Widget containerUn(index){
     Shape _shape = shapesList[index];
     return GestureDetector(
-      onTap: () async{
-        Future<bool> _isTrue = Navigator.push(context, MaterialPageRoute(builder: (context) => DevelopPage(_shape.id)));
-        bool isTrue = await _isTrue;
-        if(isTrue){
-          getShapesView();
-        }
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => DevelopPage(_shape.id)));
       },
       onLongPress: (){
         _showDialog(index);
